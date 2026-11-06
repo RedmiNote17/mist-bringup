@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <!-- Reference common trees, not proof of mist compatibility. -->
+  <remote name="xiaomi-ravelin" fetch="https://github.com/xiaomi-ravelin" />
+  <project name="android_device_xiaomi_sm4450-common" path="device/xiaomi/sm4450-common" remote="xiaomi-ravelin" revision="lineage-24.0" />
+  <project name="android_kernel_xiaomi_sm4450" path="kernel/xiaomi/sm4450" remote="xiaomi-ravelin" revision="lineage-24.0" />
+  <project name="android_kernel_xiaomi_sm4450-modules" path="kernel/xiaomi/sm4450-modules" remote="xiaomi-ravelin" revision="lineage-24.0" />
+  <project name="android_kernel_xiaomi_sm4450-devicetrees" path="kernel/xiaomi/sm4450-devicetrees" remote="xiaomi-ravelin" revision="lineage-24.0" />
+</manifest>
