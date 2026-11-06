@@ -17,7 +17,7 @@ import subprocess
 import tarfile
 from urllib.parse import urlparse, unquote
 
-ALLOWED_HOSTS = {"bigota.d.miui.com", "hugeota.d.miui.com", "cdnorg.d.miui.com", "bn.d.miui.com", "bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com"}
+ALLOWED_HOSTS = {"bigota.d.miui.com", "hugeota.d.miui.com", "cdnorg.d.miui.com", "bn.d.miui.com", "bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com", "ultimateota.d.miui.com"}
 SPARSE_MAGIC = 0xED26FF3A
 MAX_ARCHIVE_BYTES = 11 * 1024**3
 
