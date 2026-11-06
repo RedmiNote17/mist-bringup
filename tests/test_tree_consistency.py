@@ -21,7 +21,7 @@ class MistTreeTests(unittest.TestCase):
             for row in csv.DictReader(f):
                 inventory.add(row["partition"] + "/" + row["relative_path"])
         actual = []
-        for line in (ROOT / "device/xiaomi/mist/proprietary-files.txt").read_text().splitlines():
+        for line in (ROOT / "docs/verified-global-proprietary-files.txt").read_text().splitlines():
             line = line.strip()
             if not line or line.startswith("#"):
                 continue
@@ -31,6 +31,23 @@ class MistTreeTests(unittest.TestCase):
             actual.append(source)
         self.assertEqual(len(actual), 995)
         self.assertEqual(len(actual), len(set(actual)))
+
+    def test_common_vendor_only_and_mist_vintf(self):
+        # Common, not mist, owns the 995 shared vendor blobs.
+        local = (ROOT / "device/xiaomi/mist/proprietary-files.txt").read_text()
+        self.assertFalse(any(line.strip() and not line.lstrip().startswith("#")
+                             for line in local.splitlines()))
+        makefile = (ROOT / "device/xiaomi/mist/device.mk").read_text()
+        self.assertIn("DEVICE_MANIFEST_FILE :=", makefile)
+        self.assertIn("configs/vintf/manifest.xml", makefile)
+        vif = ET.parse(ROOT / "device/xiaomi/mist/configs/vintf/manifest.xml").getroot()
+        self.assertEqual(vif.attrib.get("type"), "device")
+        hal = {h.findtext("name") for h in vif.findall("hal")}
+        self.assertEqual(hal, {
+            "android.hardware.gatekeeper",
+            "android.hardware.drm",
+            "vendor.qti.hardware.wifidisplaysession_aidl",
+        })
 
     def test_manifest_valid_and_paths_nonconflicting(self):
         xml = ET.parse(ROOT / "manifests/mist-sm4450.xml").getroot()

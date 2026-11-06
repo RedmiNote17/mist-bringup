@@ -116,13 +116,36 @@ def analyze(common):
         raise ValueError("Common tree changed expected vendor BoardConfig")
     if "vendor/xiaomi/sm4450-common/sm4450-common-vendor.mk" not in cm:
         raise ValueError("Common tree changed expected vendor makefile")
-    if "manifest_ravelin.xml" in cm:
-        issues.append("Common VINTF uses ravelin-specific manifest; mist VINTF validation needed")
+    # Device-specific manifest overrides the shared ravelin-named source.
+    if "DEVICE_MANIFEST_FILE :=" not in dev or "$(DEVICE_PATH)/configs/vintf/manifest.xml" not in dev:
+        raise ValueError("mist device manifest override missing")
+    path = ROOT / "device/xiaomi/mist/configs/vintf/manifest.xml"
+    vm = ET.parse(path).getroot()
+    if vm.tag != "manifest" or vm.attrib.get("type") != "device":
+        raise ValueError("Invalid mist device VINTF manifest")
+    got = {(hal.findtext("name"), fq.text)
+           for hal in vm.findall("hal") for fq in hal.findall("fqname")}
+    verified = {
+        ("android.hardware.gatekeeper", "IGatekeeper/default"),
+        ("android.hardware.drm", "IDrmFactory/wfdhdcp"),
+        ("vendor.qti.hardware.wifidisplaysession_aidl", "IWifiDisplaySession/default"),
+        ("vendor.qti.hardware.wifidisplaysession_aidl", "IWifiDisplaySessionAudioTrack/default"),
+        ("vendor.qti.hardware.wifidisplaysession_aidl", "IWifiDisplaySessionImageTrack/default"),
+        ("vendor.qti.hardware.wifidisplaysession_aidl", "IWifiDisplaySessionVideoTrack/default"),
+    }
+    stock = json.loads((ROOT / "generated/stock-global/vintf-hals.json").read_text())
+    observed = {(s["name"], f.strip())
+                for s in stock if s["partition"] == "vendor"
+                and s["file"] == "etc/vintf/manifest_parrot.xml"
+                for f in s["fqname"].split(",") if f.strip()}
+    if verified != got or not got.issubset(observed):
+        raise ValueError("mist VINTF interfaces differ from verified stock parrot manifest")
+    info.append("mist device VINTF manifest overrides ravelin and matches 6 stock HAL instances")
     if "sku_ravelin" in cm:
         issues.append("Common audio/permissions use sku_ravelin; substitute verified mist SKU")
     info.append("Pinned SM4450 common tree supports parrot/Linux 6.6 and shared vendor modules")
 
-    src = proprietary_sources(ROOT / "device/xiaomi/mist/proprietary-files.txt")
+    src = proprietary_sources(ROOT / "docs/verified-global-proprietary-files.txt")
     if len(src) != 995 or len(set(src)) != len(src):
         raise ValueError("Expected exactly 995 unique stock-verified proprietary paths")
     unavailable = sorted(set(src) - inventory_paths())
@@ -150,7 +173,7 @@ def analyze(common):
     if "### vendor_boot/first_stage_ramdisk/fstab.default" not in ramdisk:
         raise ValueError("Stock vendor_boot fstab missing")
     issues += [
-        "Generate and validate mist-specific VINTF, init/first-stage fstab and SEPolicy",
+        "Validate effective VINTF service registration, init/first-stage fstab and SELinux on-device",
         "Extract common vendor blobs to vendor/xiaomi/sm4450-common; no binaries are in this repo",
         "Validate exact kernel/modules, recovery, AVB, OTA, display, camera and modem runtime",
         "Compare test phone WPUMIDC.C11 against WPUMIXM stock reference before flashing",

@@ -35,3 +35,19 @@ Stock research can be inspected without another firmware download; older downloa
 Stock image WPUMIXM is NOT necessarily compatible with the owner's previously reported WPUMIDC.C11 variant.
 AVB, VINTF, recovery, kernel and real-device tests are blockers before any flashable release.
 See docs/current-bringup-status.md and docs/sm4450-common-analysis.md.
+
+## Proprietary blob ownership and device VINTF
+
+The shared SM4450 common tree owns the 995 device-common proprietary paths and
+its extractor applies crucial upstream blob/ELF fixups. The original cross-checked
+path list now lives in `docs/verified-global-proprietary-files.txt`, **not** as a
+second `vendor/xiaomi/mist` extraction list.
+
+`device/xiaomi/mist/extract-files.py` forwards extraction commands to
+`device/xiaomi/sm4450-common/extract-files.py` inside an initialized LineageOS
+checkout. It does not download or publish proprietary binaries on GitHub.
+
+The `mist` device VINTF override contains only Gatekeeper, DRM/WFD-HDCP,
+and WFD session instances confirmed in stock `manifest_parrot.xml`. This
+removes the ravelin-specific manifest input but does **not** prove hardware
+services work until the exact device variant is tested.

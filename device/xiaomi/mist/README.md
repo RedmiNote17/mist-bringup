@@ -12,3 +12,15 @@ Do not run a separate mist extraction that duplicates common vendor modules.
 mist-specific first-stage mount/AVB/SEPolicy, actual vendor extraction, kernel and runtime hardware tests remain.
 
 Run the single GH Actions mist-preflight workflow, then inspect its explicit list of remaining blockers.
+
+## Corrections
+
+- The device-specific VINTF source at `configs/vintf/manifest.xml` replaces
+  the generic tree's ravelin-specific manifest source; entries are matched
+  against published stock HAL evidence.
+- `proprietary-files.txt` contains no duplicate common blob entries.
+  The verified 995-path reference moved to `docs/verified-global-proprietary-files.txt`.
+- Use `extract-files.py` after syncing the pinned common tree; it delegates
+  to upstream extraction/fixups instead of generating a second vendor module set.
+- Common audio still uses sku_ravelin paths, and shared first-stage fstab still
+  needs reconciliation with stock F2FS/encryption. Neither is declared solved.

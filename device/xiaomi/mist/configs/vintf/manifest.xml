@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mist/Parrot stock reference: OS3.0.304.0.WPUMIXM.
+     This enumerates only the three hardware interfaces observed in the stock
+     vendor manifest_parrot.xml; other HAL fragments remain with vendor blobs.
+     This does not prove runtime service or MIDC.C11 variant compatibility. -->
+<manifest version="1.0" type="device" target-level="202404">
+    <hal format="aidl" optional="true">
+        <name>vendor.qti.hardware.wifidisplaysession_aidl</name>
+        <version>1</version>
+        <fqname>IWifiDisplaySession/default</fqname>
+        <fqname>IWifiDisplaySessionAudioTrack/default</fqname>
+        <fqname>IWifiDisplaySessionImageTrack/default</fqname>
+        <fqname>IWifiDisplaySessionVideoTrack/default</fqname>
+    </hal>
+    <hal format="aidl">
+        <name>android.hardware.gatekeeper</name>
+        <version>1</version>
+        <fqname>IGatekeeper/default</fqname>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>android.hardware.drm</name>
+        <fqname>IDrmFactory/wfdhdcp</fqname>
+    </hal>
+</manifest>
