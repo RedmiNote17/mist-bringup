@@ -25,3 +25,9 @@ Relevant upstream public reference: [xiaomi-ravelin/android_device_xiaomi_sm4450
 - LineageOS/android_hardware_xiaomi (dependency metadata)
 
 All of the above need a compatibility review and properly installed branches before we inherit the common tree. No unverified hardware settings are added to our mist BoardConfig yet.
+
+## Additional direct mist evidence
+
+- The common repository's `proprietary-files.txt` explicitly says its default blob list came from **mist OS3.0.306.0.WPUINXM** (India).
+- Its `init/init.kernel.post_boot.sh` contains conditional handling when `ro.product.name` is `mist`.
+- This provides a strong candidate reference for the Redmi Note 17 project, but the Indian build differs from our checksum-verified Global WPUMIXM source. We should intersect its file paths with our Global EROFS inventory, not blindly reuse or redistribute those proprietary binaries.
