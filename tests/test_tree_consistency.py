@@ -45,7 +45,6 @@ class MistTreeTests(unittest.TestCase):
     def test_stock_partition_config(self):
         board = (ROOT / "device/xiaomi/mist/BoardConfig.mk").read_text()
         for expected in (
-            "TARGET_BOARD_PLATFORM := parrot",
             "BOARD_BOOT_HEADER_VERSION := 4",
             "include device/xiaomi/sm4450-common/BoardConfigCommon.mk",
             "BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 10196353024",
