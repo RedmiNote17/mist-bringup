@@ -11,6 +11,7 @@ No original commit, file revision or generated research report was deleted.
 | --- | --- | --- |
 | Device product, BoardConfig, VINTF, extraction, tests | [nAa-mist/device_xiaomi_mist](https://github.com/nAa-mist/device_xiaomi_mist) | `device/xiaomi/mist` |
 | Device-specific vendor overlays / future extra blobs | [nAa-mist/vendor_xiaomi_mist](https://github.com/nAa-mist/vendor_xiaomi_mist) | `vendor/xiaomi/mist` |
+| Mist-specific kernel references (source not yet imported) | [nAa-mist/kernel_xiaomi_mist](https://github.com/nAa-mist/kernel_xiaomi_mist) | `kernel/xiaomi/mist` |
 | Stock inspection, original Git history and reports | [nAa-mist/mist-bringup](https://github.com/nAa-mist/mist-bringup) | Research-only |
 
 Device tree: all **eight original device-touching revisions** were replayed in
@@ -45,3 +46,5 @@ The research source manifest currently points to upstream xiaomi-ravelin
 SM4450 common, kernel, modules, and devicetree sources. They have not yet
 been migrated into nAa-mist-owned repositories. The correct platform is
 **SM4450 / Qualcomm Parrot**, not "SM440".
+
+The original `kernel/xiaomi/mist/README.md` reference was also replayed to the mist-specific kernel repository. Shared SM4450 kernel, modules and device-tree sources still await separate repository ownership.
