@@ -1,12 +1,6 @@
 name: Inspect mist super partitions and boot images
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/inspect-partitions.yml'
-      - 'scripts/inspect_partitions.py'
-      - 'tests/test_partitions.py'
   workflow_dispatch:
 
 permissions:

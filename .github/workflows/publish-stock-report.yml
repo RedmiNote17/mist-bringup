@@ -1,0 +1,67 @@
+name: Publish successful mist stock inventory to repository
+
+on:
+  workflow_run:
+    workflows:
+      - One-pass mist bring-up (download once, reuse verified partitions)
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download only the completed research artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/stock-report"
+          gh run download "${{ github.event.workflow_run.id }}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name "mist-complete-stock-inventory-${{ github.event.workflow_run.run_number }}" \
+            --dir "$RUNNER_TEMP/stock-report"
+
+      - name: Copy metadata only into durable repository reports
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          import os
+          src = Path(os.environ["RUNNER_TEMP"]) / "stock-report"
+          dest = Path("generated/stock-global")
+          allowed = {".md", ".json", ".csv", ".txt"}
+          files = sorted(p for p in src.rglob("*") if p.is_file() and not p.is_symlink())
+          if not any(p.name == "SUMMARY.md" for p in files):
+              raise RuntimeError("Required validated SUMMARY.md not found")
+          if sum(p.stat().st_size for p in files) > 80 * 1024 * 1024:
+              raise RuntimeError("Unexpectedly large report")
+          dest.mkdir(parents=True, exist_ok=True)
+          for p in files:
+              if p.suffix.lower() not in allowed or p.stat().st_size > 20*1024*1024:
+                  continue
+              rel = p.relative_to(src)
+              out = dest / rel
+              out.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(p, out)
+          print("Copied", len(files), "report entries", flush=True)
+          PY
+
+      - name: Commit generated text inventory without retriggering downloads
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add generated/stock-global/
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish verified mist stock bring-up inventory"
+            git push origin HEAD:main
+          else
+            echo "No inventory changes"
+          fi

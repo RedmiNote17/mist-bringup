@@ -1,13 +1,6 @@
 name: Inspect stock mist fastboot firmware
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/inspect-stock.yml'
-      - 'scripts/firmware.py'
-      - 'tests/test_firmware.py'
-      - 'firmware/global-fastboot.json'
   workflow_dispatch:
 
 permissions:
