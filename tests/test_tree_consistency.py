@@ -12,6 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 class MistTreeTests(unittest.TestCase):
     def test_proprietary_sources_are_present_in_verified_inventory(self):
         inventory = set()
+        import json
+        audit = json.loads((ROOT / "generated/stock-global/link-audit/stock-link-audit.json").read_text())
+        for entry in audit["entries"]:
+            if entry["status"] in ("regular", "symlink"):
+                inventory.add(entry["source"])
         with (ROOT / "generated/stock-global/file-inventory.csv").open(newline="") as f:
             for row in csv.DictReader(f):
                 inventory.add(row["partition"] + "/" + row["relative_path"])
@@ -24,7 +29,7 @@ class MistTreeTests(unittest.TestCase):
             self.assertNotIn("..", Path(source).parts)
             self.assertIn(source, inventory, "not in the stock regular-file inventory")
             actual.append(source)
-        self.assertGreaterEqual(len(actual), 800)
+        self.assertEqual(len(actual), 995)
         self.assertEqual(len(actual), len(set(actual)))
 
     def test_manifest_valid_and_paths_nonconflicting(self):

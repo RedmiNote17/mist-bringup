@@ -1,16 +1,17 @@
-# mist Global vs existing SM4450 common proprietary list
+# mist stock vs SM4450 reference proprietary-file paths
 
-Reference: https://github.com/xiaomi-ravelin/android_device_xiaomi_sm4450-common/tree/lineage-24.0
+Source stock: verified Global `OS3.0.304.0.WPUMIXM`, MD5 `c4450c4e168052ca9de1211306d3beff`.
+Reference list: `xiaomi-ravelin/android_device_xiaomi_sm4450-common` at commit `a476fff00d6149fc988f12f43b73cde1587c7b88`, originally derived from Indian `OS3.0.306.0.WPUINXM`.
 
-- Verified stock: **OS3.0.304.0.WPUMIXM** (Global), 10,112 regular-file paths.
-- Reference list originally based on **OS3.0.306.0.WPUINXM** (India).
-- Compared source paths in the reference proprietary-files entries, ignoring extraction destination and fixup flags.
-- **903** entries have matching regular-file source paths.
-- **92** entries were not observed as regular files in the inventory.
+- **10112** regular-file paths in original EROFS inventory (the inventory missed some files due to traversal/mount-root differences).
+- **903** reference paths directly matched the original inventory.
+- **92** more reference paths resolved through a read-only mount of the cached stock partitions.
+- **995/995** reference source paths now have verified Global-stock location matches.
+- **0** reference entries remain unresolved at the path-presence level.
 
-**Important:** Missing from the inventory does not prove absent from the stock image: symbolic links were excluded by the first-stage scanner. Some references may also be region-specific or target a different build.
+Reports: `generated/stock-global/link-audit/SUMMARY.md` and `stock-link-audit.json`.
+Working draft: `device/xiaomi/mist/proprietary-files.txt`.
 
-`device/xiaomi/mist/proprietary-files.txt` contains the matching subset as a reviewable draft; it is not an established, boot-tested proprietary list.
-`docs/stock-blob-unresolved.txt` records non-matching paths for follow-up symlink and version checks.
+**Presence alone does not ensure a bootable ROM.** The common tree's source blob-fixup rules, relabeling, runtime dependencies, partition mapping and compatibility with WPUMIDC.C11 remain to be verified.
 
-Don't add Indian build binaries to the Global tree without file-by-file compatibility verification. No firmware binary is redistributed.
+No full firmware artifact was uploaded: speed testing found CDNORG ~13.5 MB/s in a new bounded range test; the existing verified extracted-partition cache was restored successfully for the audit.
