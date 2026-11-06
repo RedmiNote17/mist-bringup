@@ -14,7 +14,7 @@ class Stage2Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             path = Path(td) / "vendor.img"
             b = bytearray(4096)
-            b[1080:1082] = b"\\x53\\xef"
+            b[1080:1082] = b"\x53\xef"
             path.write_bytes(b)
             self.assertEqual(fs_info(path)["filesystem"], "ext4")
 
@@ -22,7 +22,7 @@ class Stage2Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             path = Path(td) / "system.img"
             b = bytearray(4096)
-            b[1024:1028] = b"\\xe2\\xe1\\xf5\\xe0"
+            b[1024:1028] = b"\xe2\xe1\xf5\xe0"
             path.write_bytes(b)
             self.assertEqual(fs_info(path)["filesystem"], "erofs")
 

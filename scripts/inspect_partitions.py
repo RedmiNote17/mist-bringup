@@ -52,11 +52,11 @@ def fs_info(path: Path):
     with path.open("rb") as f:
         data = f.read(4096)
     kind = "unknown"
-    if len(data) >= 1082 and data[1080:1082] == b"\\x53\\xef":
+    if len(data) >= 1082 and data[1080:1082] == b"\x53\xef":
         kind = "ext4"
-    elif len(data) >= 1028 and data[1024:1028] == b"\\xe2\\xe1\\xf5\\xe0":
+    elif len(data) >= 1028 and data[1024:1028] == b"\xe2\xe1\xf5\xe0":
         kind = "erofs"
-    elif len(data) >= 1028 and data[1024:1028] == b"\\x10\\x20\\xf5\\xf2":
+    elif len(data) >= 1028 and data[1024:1028] == b"\x10\x20\xf5\xf2":
         kind = "f2fs"
     return {"name": path.name, "size_bytes": path.stat().st_size, "filesystem": kind}
 
