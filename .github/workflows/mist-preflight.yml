@@ -1,15 +1,6 @@
 name: mist one-pass LineageOS 24.0 preflight (no firmware download)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/mist-preflight.yml'
-      - 'device/xiaomi/mist/**'
-      - 'manifests/mist-sm4450.xml'
-      - 'scripts/preflight.py'
-      - 'scripts/audit_remaining.py'
-      - 'tests/**'
   workflow_dispatch:
 
 permissions:

@@ -1,3 +1,5 @@
+> **Repository split (November 2026):** This repository now owns **stock research, firmware inspection, and historical reports only**. For active device configuration use [nAa-mist/device_xiaomi_mist](https://github.com/nAa-mist/device_xiaomi_mist). For mist-only vendor additions use [nAa-mist/vendor_xiaomi_mist](https://github.com/nAa-mist/vendor_xiaomi_mist). See [MIGRATION.md](MIGRATION.md). Historical device/vendor files remain as archived records, not active source-of-truth.
+
 # Redmi Note 17 5G (mist) — unofficial LineageOS 24.0 bring-up
 
 **Status: research-backed device-tree scaffold, NOT a flashable or boot-tested ROM.**
