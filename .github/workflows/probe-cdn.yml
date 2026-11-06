@@ -20,7 +20,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Probe official CDN candidates (bounded 8MiB each)
-        run: python3 -u scripts/probe_cdn.py firmware/cdn-candidates.json "$RUNNER_TEMP/cdn/report.json"
+        run: |
+          echo "Fresh GitHub runner mirror benchmark:"
+          date -u
+          python3 -u scripts/probe_cdn.py firmware/cdn-candidates.json "$RUNNER_TEMP/cdn/report.json"
       - name: Upload benchmark results
         if: always()
         uses: actions/upload-artifact@v4
