@@ -1,0 +1,50 @@
+[
+  {
+    "partition": "mi_ext",
+    "files": 150,
+    "ko_modules": 0,
+    "image_bytes": 1108955136
+  },
+  {
+    "partition": "odm",
+    "files": 452,
+    "ko_modules": 0,
+    "image_bytes": 17195008
+  },
+  {
+    "partition": "product",
+    "files": 1483,
+    "ko_modules": 0,
+    "image_bytes": 3339325440
+  },
+  {
+    "partition": "system",
+    "files": 2516,
+    "ko_modules": 0,
+    "image_bytes": 719495168
+  },
+  {
+    "partition": "system_dlkm",
+    "files": 213,
+    "ko_modules": 192,
+    "image_bytes": 15286272
+  },
+  {
+    "partition": "system_ext",
+    "files": 2447,
+    "ko_modules": 0,
+    "image_bytes": 637571072
+  },
+  {
+    "partition": "vendor",
+    "files": 2573,
+    "ko_modules": 0,
+    "image_bytes": 669220864
+  },
+  {
+    "partition": "vendor_dlkm",
+    "files": 278,
+    "ko_modules": 268,
+    "image_bytes": 26017792
+  }
+]

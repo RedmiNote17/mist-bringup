@@ -1,0 +1,38 @@
+[
+  {
+    "host": "cdnorg.d.miui.com",
+    "url": "https://cdnorg.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+    "status": 206,
+    "bytes": 8388608,
+    "speed_Bps": 9602740,
+    "valid": true,
+    "exit_code": 0
+  },
+  {
+    "host": "bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com",
+    "url": "https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+    "status": 206,
+    "bytes": 8388608,
+    "speed_Bps": 3127088,
+    "valid": true,
+    "exit_code": 0
+  },
+  {
+    "host": "bn.d.miui.com",
+    "url": "https://bn.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+    "status": 206,
+    "bytes": 8388608,
+    "speed_Bps": 5984638,
+    "valid": true,
+    "exit_code": 0
+  },
+  {
+    "host": "ultimateota.d.miui.com",
+    "url": "https://ultimateota.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+    "status": 403,
+    "bytes": 169,
+    "speed_Bps": 407,
+    "valid": false,
+    "exit_code": 0
+  }
+]
