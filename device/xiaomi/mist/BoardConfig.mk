@@ -7,6 +7,14 @@ TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
 
+# Qualcomm SM4450 / Parrot confirmed by mist-w-oss and stock module directories.
+TARGET_BOARD_PLATFORM := parrot
+BOARD_USES_QCOM_HARDWARE := true
+TARGET_KERNEL_VERSION := 6.6
+
+# Source in verified Global stock includes a standalone DTBO partition.
+BOARD_DTBOIMG_PARTITION_SIZE := 25165824
+
 # Observed on stock boot, vendor_boot, init_boot and recovery headers.
 BOARD_BOOTIMG_HEADER_VERSION := 4
 BOARD_MKBOOTIMG_ARGS += --header_version 4
