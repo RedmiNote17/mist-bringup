@@ -17,7 +17,7 @@ import subprocess
 import tarfile
 from urllib.parse import urlparse, unquote
 
-ALLOWED_HOSTS = {"bigota.d.miui.com", "hugeota.d.miui.com"}
+ALLOWED_HOSTS = {"bigota.d.miui.com", "hugeota.d.miui.com", "cdnorg.d.miui.com", "bn.d.miui.com", "bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com"}
 SPARSE_MAGIC = 0xED26FF3A
 MAX_ARCHIVE_BYTES = 11 * 1024**3
 
@@ -30,16 +30,18 @@ def validate_manifest(m):
     filename = m.get("filename", "")
     if not re.fullmatch(r"mist_global_images_OS[0-9.]+\.WPUMIXM_[A-Za-z0-9._-]+\.tgz", filename):
         raise ValueError("Unexpected fastboot archive name")
-    parsed = urlparse(m.get("url", ""))
-    if parsed.scheme != "https" or parsed.hostname not in ALLOWED_HOSTS:
-        raise ValueError("Firmware must come from an approved Xiaomi HTTPS CDN")
-    if unquote(parsed.path.rsplit("/", 1)[-1]) != filename:
-        raise ValueError("Manifest URL and filename disagree")
-    if f"/{m['version']}/" not in parsed.path:
-        raise ValueError("Manifest URL and firmware version disagree")
+    urls = [m.get("url", ""), *m.get("fallback_urls", [])]
+    for source in urls:
+        parsed = urlparse(source)
+        if parsed.scheme != "https" or parsed.hostname not in ALLOWED_HOSTS:
+            raise ValueError("Firmware must come from an approved HTTPS mirror")
+        if unquote(parsed.path.rsplit("/", 1)[-1]) != filename:
+            raise ValueError("Manifest URL and filename disagree")
+        if f"/{m['version']}/" not in parsed.path:
+            raise ValueError("Manifest URL and firmware version disagree")
     if not re.fullmatch(r"[a-fA-F0-9]{32}", m.get("md5", "")):
         raise ValueError("Manifest needs a complete MD5")
-    return parsed
+    return urlparse(m["url"])
 
 
 def download(m, destination):
@@ -69,21 +71,36 @@ def download(m, destination):
         "--out=" + destination.name,
         m["url"],
     ]
-    subprocess.run(args, check=True)
-    total = destination.stat().st_size
-    if total <= 0 or total > MAX_ARCHIVE_BYTES:
-        raise ValueError(f"Unexpected archive size: {total} bytes")
-    checksum = hashlib.md5()
-    sha256 = hashlib.sha256()
-    with destination.open("rb") as stream:
-        while block := stream.read(16 * 1024 * 1024):
-            checksum.update(block)
-            sha256.update(block)
-    observed = checksum.hexdigest()
-    if observed.lower() != m["md5"].lower():
-        raise ValueError(f"MD5 mismatch: observed {observed}, expected {m['md5']}")
-    print(f"MD5 verified: {observed}; bytes={total}", flush=True)
-    return {"size_bytes": total, "md5": observed, "sha256": sha256.hexdigest()}
+    sources = [m["url"], *m.get("fallback_urls", [])]
+    for i, source in enumerate(sources, 1):
+        args[-1] = source
+        print(f"Mirror {i}/{len(sources)}: {urlparse(source).hostname}", flush=True)
+        try:
+            subprocess.run(args, check=True)
+        except subprocess.CalledProcessError as exc:
+            if i < len(sources):
+                print(f"Transfer failed on mirror {i}; trying alternate (exit={exc.returncode})", flush=True)
+                continue
+            raise
+        total = destination.stat().st_size
+        if total <= 0 or total > MAX_ARCHIVE_BYTES:
+            raise ValueError(f"Unexpected archive size: {total} bytes")
+        checksum = hashlib.md5()
+        sha256 = hashlib.sha256()
+        with destination.open("rb") as stream:
+            while block := stream.read(16 * 1024 * 1024):
+                checksum.update(block)
+                sha256.update(block)
+        observed = checksum.hexdigest()
+        if observed.lower() == m["md5"].lower():
+            print(f"MD5 verified: {observed}; bytes={total}", flush=True)
+            return {"size_bytes": total, "md5": observed, "sha256": sha256.hexdigest(), "download_host": urlparse(source).hostname}
+        destination.unlink(missing_ok=True)
+        destination.with_name(destination.name + ".aria2").unlink(missing_ok=True)
+        if i == len(sources):
+            raise ValueError(f"MD5 mismatch: observed {observed}, expected {m['md5']}")
+        print("Checksum mismatch; switching to alternate mirror", flush=True)
+    raise RuntimeError("No mirror succeeded")
 
 
 def classify_header(data):

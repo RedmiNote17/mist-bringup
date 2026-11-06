@@ -10,3 +10,11 @@ This independent workflow benchmarks Xiaomi CDN endpoints without fetching the 8
 - **Do not switch the full firmware downloader to a mirror until a URL has been confirmed working.**
 
 The previous full-image workflow used up to 12 connections but these may not help when the server/CDN is rate-limited. Short probes isolate this before transferring gigabytes. The existing download workflow is unaffected by this diagnostic addition.
+
+## Verified 8 MiB range measurements (GitHub Actions runner, 7 Nov 2026)
+
+- CDNORG: 12.21 MB/s (primary)
+- Singapore Alibaba OSS: 4.15 MB/s (fallback)
+- BN: 2.35 MB/s (fallback)
+
+All responded HTTP 206 and returned the requested 8 MiB sample. Full archive checksum still required; small-sample speeds may differ from sustained transfers.

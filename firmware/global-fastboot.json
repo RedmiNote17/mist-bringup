@@ -7,11 +7,16 @@
   "type": "Fastboot",
   "released": "2026-09-17",
   "filename": "mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
-  "url": "https://bigota.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+  "url": "https://cdnorg.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
   "md5": "c4450c4e168052ca9de1211306d3beff",
   "sources": [
     "https://xmfirmwareupdater.com/hyperos/mist/stable/OS3.0.304.0.WPUMIXM/",
     "https://mirom.ezbox.idv.tw/en/phone/mist/"
   ],
-  "warning": "Research reference only. User's previously reported WPUMIDC.C11 variant is not equivalent to published WPUMIXM Global fastboot firmware."
+  "warning": "Research reference only. User's previously reported WPUMIDC.C11 variant is not equivalent to published WPUMIXM Global fastboot firmware.",
+  "fallback_urls": [
+    "https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+    "https://bn.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz"
+  ],
+  "download_source_note": "2026-11-07 GitHub Actions benchmark: CDNORG 12.21 MB/s, Singapore OSS 4.15 MB/s, BN 2.35 MB/s on 8 MiB HTTP 206 ranges."
 }
