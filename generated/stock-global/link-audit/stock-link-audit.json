@@ -1,0 +1,558 @@
+{
+  "version": "OS3.0.304.0.WPUMIXM",
+  "firmware_md5": "c4450c4e168052ca9de1211306d3beff",
+  "entries": [
+    {
+      "source": "vendor/bin/adsprpcd",
+      "reference_line": "vendor/bin/adsprpcd",
+      "status": "regular",
+      "image_path": "bin/adsprpcd"
+    },
+    {
+      "source": "vendor/bin/loadalgo",
+      "reference_line": "vendor/bin/loadalgo",
+      "status": "regular",
+      "image_path": "bin/loadalgo"
+    },
+    {
+      "source": "vendor/bin/hw/android.hardware.bluetooth@aidl-service-qti",
+      "reference_line": "vendor/bin/hw/android.hardware.bluetooth@aidl-service-qti",
+      "status": "regular",
+      "image_path": "bin/hw/android.hardware.bluetooth@aidl-service-qti"
+    },
+    {
+      "source": "vendor/bin/hw/vendor.qti.camera.provider-service_64",
+      "reference_line": "vendor/bin/hw/vendor.qti.camera.provider-service_64",
+      "status": "regular",
+      "image_path": "bin/hw/vendor.qti.camera.provider-service_64"
+    },
+    {
+      "source": "vendor/bin/cdsprpcd",
+      "reference_line": "vendor/bin/cdsprpcd",
+      "status": "regular",
+      "image_path": "bin/cdsprpcd"
+    },
+    {
+      "source": "vendor/bin/cnd",
+      "reference_line": "vendor/bin/cnd",
+      "status": "regular",
+      "image_path": "bin/cnd"
+    },
+    {
+      "source": "vendor/bin/hw/vendor.qti.hardware.capabilityconfigstore-service",
+      "reference_line": "vendor/bin/hw/vendor.qti.hardware.capabilityconfigstore-service",
+      "status": "regular",
+      "image_path": "bin/hw/vendor.qti.hardware.capabilityconfigstore-service"
+    },
+    {
+      "source": "vendor/bin/adpl",
+      "reference_line": "vendor/bin/adpl",
+      "status": "regular",
+      "image_path": "bin/adpl"
+    },
+    {
+      "source": "vendor/bin/embmsslServer",
+      "reference_line": "vendor/bin/embmsslServer",
+      "status": "regular",
+      "image_path": "bin/embmsslServer"
+    },
+    {
+      "source": "vendor/bin/nicmd",
+      "reference_line": "vendor/bin/nicmd",
+      "status": "regular",
+      "image_path": "bin/nicmd"
+    },
+    {
+      "source": "vendor/bin/port-bridge",
+      "reference_line": "vendor/bin/port-bridge",
+      "status": "regular",
+      "image_path": "bin/port-bridge"
+    },
+    {
+      "source": "vendor/bin/qti",
+      "reference_line": "vendor/bin/qti",
+      "status": "regular",
+      "image_path": "bin/qti"
+    },
+    {
+      "source": "vendor/bin/shsusrd",
+      "reference_line": "vendor/bin/shsusrd",
+      "status": "regular",
+      "image_path": "bin/shsusrd"
+    },
+    {
+      "source": "system/lib64/vendor.qti.diaghal-V1-ndk.so",
+      "reference_line": "system/lib64/vendor.qti.diaghal-V1-ndk.so",
+      "status": "regular",
+      "image_path": "system/lib64/vendor.qti.diaghal-V1-ndk.so"
+    },
+    {
+      "source": "vendor/bin/diag-router",
+      "reference_line": "vendor/bin/diag-router",
+      "status": "regular",
+      "image_path": "bin/diag-router"
+    },
+    {
+      "source": "vendor/bin/hw/vendor.qti.hardware.display.color-service",
+      "reference_line": "vendor/bin/hw/vendor.qti.hardware.display.color-service",
+      "status": "regular",
+      "image_path": "bin/hw/vendor.qti.hardware.display.color-service"
+    },
+    {
+      "source": "vendor/bin/qdcmss",
+      "reference_line": "vendor/bin/qdcmss",
+      "status": "regular",
+      "image_path": "bin/qdcmss"
+    },
+    {
+      "source": "vendor/bin/qguard",
+      "reference_line": "vendor/bin/qguard",
+      "status": "regular",
+      "image_path": "bin/qguard"
+    },
+    {
+      "source": "vendor/bin/ppd",
+      "reference_line": "vendor/bin/ppd",
+      "status": "regular",
+      "image_path": "bin/ppd"
+    },
+    {
+      "source": "system_ext/bin/dpmd",
+      "reference_line": "system_ext/bin/dpmd",
+      "status": "regular",
+      "image_path": "bin/dpmd"
+    },
+    {
+      "source": "system_ext/bin/tcmd",
+      "reference_line": "system_ext/bin/tcmd",
+      "status": "regular",
+      "image_path": "bin/tcmd"
+    },
+    {
+      "source": "vendor/bin/vendor.dpmd",
+      "reference_line": "vendor/bin/vendor.dpmd",
+      "status": "regular",
+      "image_path": "bin/vendor.dpmd"
+    },
+    {
+      "source": "vendor/bin/dspservice",
+      "reference_line": "vendor/bin/dspservice",
+      "status": "regular",
+      "image_path": "bin/dspservice"
+    },
+    {
+      "source": "vendor/bin/hw/android.hardware.gatekeeper-service-qti",
+      "reference_line": "vendor/bin/hw/android.hardware.gatekeeper-service-qti",
+      "status": "regular",
+      "image_path": "bin/hw/android.hardware.gatekeeper-service-qti"
+    },
+    {
+      "source": "vendor/bin/hw/android.hardware.gnss-aidl-service-qti",
+      "reference_line": "vendor/bin/hw/android.hardware.gnss-aidl-service-qti",
+      "status": "regular",
+      "image_path": "bin/hw/android.hardware.gnss-aidl-service-qti"
+    },
+    {
+      "source": "vendor/bin/edgnss-daemon",
+      "reference_line": "vendor/bin/edgnss-daemon",
+      "status": "regular",
+      "image_path": "bin/edgnss-daemon"
+    },
+    {
+      "source": "vendor/bin/engine-service",
+      "reference_line": "vendor/bin/engine-service",
+      "status": "regular",
+      "image_path": "bin/engine-service"
+    },
+    {
+      "source": "vendor/bin/loc_launcher",
+      "reference_line": "vendor/bin/loc_launcher",
+      "status": "regular",
+      "image_path": "bin/loc_launcher"
+    },
+    {
+      "source": "vendor/bin/lowi-server",
+      "reference_line": "vendor/bin/lowi-server",
+      "status": "regular",
+      "image_path": "bin/lowi-server"
+    },
+    {
+      "source": "vendor/bin/mlid",
+      "reference_line": "vendor/bin/mlid",
+      "status": "regular",
+      "image_path": "bin/mlid"
+    },
+    {
+      "source": "vendor/bin/slim_daemon",
+      "reference_line": "vendor/bin/slim_daemon",
+      "status": "regular",
+      "image_path": "bin/slim_daemon"
+    },
+    {
+      "source": "vendor/bin/xtra-daemon",
+      "reference_line": "vendor/bin/xtra-daemon",
+      "status": "regular",
+      "image_path": "bin/xtra-daemon"
+    },
+    {
+      "source": "vendor/bin/xtwifi-client",
+      "reference_line": "vendor/bin/xtwifi-client",
+      "status": "regular",
+      "image_path": "bin/xtwifi-client"
+    },
+    {
+      "source": "vendor/bin/ims-dataservice-daemon",
+      "reference_line": "vendor/bin/ims-dataservice-daemon",
+      "status": "regular",
+      "image_path": "bin/ims-dataservice-daemon"
+    },
+    {
+      "source": "vendor/bin/ims_rtp_daemon",
+      "reference_line": "vendor/bin/ims_rtp_daemon",
+      "status": "regular",
+      "image_path": "bin/ims_rtp_daemon"
+    },
+    {
+      "source": "vendor/bin/imsdaemon",
+      "reference_line": "vendor/bin/imsdaemon",
+      "status": "regular",
+      "image_path": "bin/imsdaemon"
+    },
+    {
+      "source": "vendor/bin/init.class_main.sh",
+      "reference_line": "vendor/bin/init.class_main.sh",
+      "status": "regular",
+      "image_path": "bin/init.class_main.sh"
+    },
+    {
+      "source": "vendor/bin/init.crda.sh",
+      "reference_line": "vendor/bin/init.crda.sh",
+      "status": "regular",
+      "image_path": "bin/init.crda.sh"
+    },
+    {
+      "source": "vendor/bin/init.kernel.post_boot-ravelin.sh",
+      "reference_line": "vendor/bin/init.kernel.post_boot-ravelin.sh",
+      "status": "regular",
+      "image_path": "bin/init.kernel.post_boot-ravelin.sh"
+    },
+    {
+      "source": "vendor/bin/init.qcom.class_core.sh",
+      "reference_line": "vendor/bin/init.qcom.class_core.sh",
+      "status": "regular",
+      "image_path": "bin/init.qcom.class_core.sh"
+    },
+    {
+      "source": "vendor/bin/init.qcom.early_boot.sh",
+      "reference_line": "vendor/bin/init.qcom.early_boot.sh",
+      "status": "regular",
+      "image_path": "bin/init.qcom.early_boot.sh"
+    },
+    {
+      "source": "vendor/bin/init.qcom.sdio.sh",
+      "reference_line": "vendor/bin/init.qcom.sdio.sh",
+      "status": "regular",
+      "image_path": "bin/init.qcom.sdio.sh"
+    },
+    {
+      "source": "vendor/bin/init.qcom.sh",
+      "reference_line": "vendor/bin/init.qcom.sh",
+      "status": "regular",
+      "image_path": "bin/init.qcom.sh"
+    },
+    {
+      "source": "vendor/bin/init.qti.kernel.sh",
+      "reference_line": "vendor/bin/init.qti.kernel.sh",
+      "status": "regular",
+      "image_path": "bin/init.qti.kernel.sh"
+    },
+    {
+      "source": "vendor/bin/init.qti.write.sh",
+      "reference_line": "vendor/bin/init.qti.write.sh",
+      "status": "regular",
+      "image_path": "bin/init.qti.write.sh"
+    },
+    {
+      "source": "vendor/bin/vendor_modprobe.sh",
+      "reference_line": "vendor/bin/vendor_modprobe.sh",
+      "status": "regular",
+      "image_path": "bin/vendor_modprobe.sh"
+    },
+    {
+      "source": "vendor/bin/msm_irqbalance",
+      "reference_line": "vendor/bin/msm_irqbalance",
+      "status": "regular",
+      "image_path": "bin/msm_irqbalance"
+    },
+    {
+      "source": "vendor/bin/hw/android.hardware.security.keymint-service-qti",
+      "reference_line": "vendor/bin/hw/android.hardware.security.keymint-service-qti",
+      "status": "regular",
+      "image_path": "bin/hw/android.hardware.security.keymint-service-qti"
+    },
+    {
+      "source": "vendor/bin/hw/vendor.qti.media.c2@1.0-service",
+      "reference_line": "vendor/bin/hw/vendor.qti.media.c2@1.0-service",
+      "status": "regular",
+      "image_path": "bin/hw/vendor.qti.media.c2@1.0-service"
+    },
+    {
+      "source": "vendor/bin/hw/vendor.qti.media.c2audio@1.0-service",
+      "reference_line": "vendor/bin/hw/vendor.qti.media.c2audio@1.0-service",
+      "status": "regular",
+      "image_path": "bin/hw/vendor.qti.media.c2audio@1.0-service"
+    },
+    {
+      "source": "vendor/bin/init.qti.media.sh",
+      "reference_line": "vendor/bin/init.qti.media.sh",
+      "status": "regular",
+      "image_path": "bin/init.qti.media.sh"
+    },
+    {
+      "source": "vendor/bin/pd-mapper",
+      "reference_line": "vendor/bin/pd-mapper",
+      "status": "regular",
+      "image_path": "bin/pd-mapper"
+    },
+    {
+      "source": "vendor/bin/hw/vendor.qti.hardware.perf2-hal-service",
+      "reference_line": "vendor/bin/hw/vendor.qti.hardware.perf2-hal-service",
+      "status": "regular",
+      "image_path": "bin/hw/vendor.qti.hardware.perf2-hal-service"
+    },
+    {
+      "source": "vendor/bin/poweropt-service",
+      "reference_line": "vendor/bin/poweropt-service",
+      "status": "regular",
+      "image_path": "bin/poweropt-service"
+    },
+    {
+      "source": "vendor/bin/qlm-service",
+      "reference_line": "vendor/bin/qlm-service",
+      "status": "regular",
+      "image_path": "bin/qlm-service"
+    },
+    {
+      "source": "vendor/bin/qsap_qapeservice",
+      "reference_line": "vendor/bin/qsap_qapeservice",
+      "status": "regular",
+      "image_path": "bin/qsap_qapeservice"
+    },
+    {
+      "source": "vendor/bin/pm-proxy",
+      "reference_line": "vendor/bin/pm-proxy",
+      "status": "regular",
+      "image_path": "bin/pm-proxy"
+    },
+    {
+      "source": "vendor/bin/pm-service",
+      "reference_line": "vendor/bin/pm-service",
+      "status": "regular",
+      "image_path": "bin/pm-service"
+    },
+    {
+      "source": "system_ext/bin/qccsyshal_aidl-service",
+      "reference_line": "system_ext/bin/qccsyshal_aidl-service",
+      "status": "regular",
+      "image_path": "bin/qccsyshal_aidl-service"
+    },
+    {
+      "source": "vendor/bin/qcc-vendor",
+      "reference_line": "vendor/bin/qcc-vendor",
+      "status": "regular",
+      "image_path": "bin/qcc-vendor"
+    },
+    {
+      "source": "vendor/bin/init.qti.qcv.sh",
+      "reference_line": "vendor/bin/init.qti.qcv.sh",
+      "status": "regular",
+      "image_path": "bin/init.qti.qcv.sh"
+    },
+    {
+      "source": "vendor/bin/qesdk-manager",
+      "reference_line": "vendor/bin/qesdk-manager",
+      "status": "regular",
+      "image_path": "bin/qesdk-manager"
+    },
+    {
+      "source": "vendor/bin/snapdragon_services",
+      "reference_line": "vendor/bin/snapdragon_services",
+      "status": "regular",
+      "image_path": "bin/snapdragon_services"
+    },
+    {
+      "source": "system/etc/sysconfig/qti_whitelist.xml",
+      "reference_line": "system/etc/sysconfig/qti_whitelist.xml",
+      "status": "regular",
+      "image_path": "system/etc/sysconfig/qti_whitelist.xml"
+    },
+    {
+      "source": "vendor/bin/irsc_util",
+      "reference_line": "vendor/bin/irsc_util",
+      "status": "regular",
+      "image_path": "bin/irsc_util"
+    },
+    {
+      "source": "vendor/bin/qmipriod",
+      "reference_line": "vendor/bin/qmipriod",
+      "status": "regular",
+      "image_path": "bin/qmipriod"
+    },
+    {
+      "source": "vendor/bin/qrtr-cfg",
+      "reference_line": "vendor/bin/qrtr-cfg",
+      "status": "regular",
+      "image_path": "bin/qrtr-cfg"
+    },
+    {
+      "source": "vendor/bin/qrtr-lookup",
+      "reference_line": "vendor/bin/qrtr-lookup",
+      "status": "regular",
+      "image_path": "bin/qrtr-lookup"
+    },
+    {
+      "source": "vendor/bin/qrtr-ns",
+      "reference_line": "vendor/bin/qrtr-ns",
+      "status": "regular",
+      "image_path": "bin/qrtr-ns"
+    },
+    {
+      "source": "vendor/bin/qms",
+      "reference_line": "vendor/bin/qms",
+      "status": "regular",
+      "image_path": "bin/qms"
+    },
+    {
+      "source": "vendor/bin/hw/vendor.qti.hardware.qseecom@1.0-service",
+      "reference_line": "vendor/bin/hw/vendor.qti.hardware.qseecom@1.0-service",
+      "status": "regular",
+      "image_path": "bin/hw/vendor.qti.hardware.qseecom@1.0-service"
+    },
+    {
+      "source": "vendor/bin/qseecomd",
+      "reference_line": "vendor/bin/qseecomd",
+      "status": "regular",
+      "image_path": "bin/qseecomd"
+    },
+    {
+      "source": "vendor/bin/vendor.qti.qspmhal-service",
+      "reference_line": "vendor/bin/vendor.qti.qspmhal-service",
+      "status": "regular",
+      "image_path": "bin/vendor.qti.qspmhal-service"
+    },
+    {
+      "source": "system/etc/permissions/uimremoteclient.xml",
+      "reference_line": "system/etc/permissions/uimremoteclient.xml",
+      "status": "regular",
+      "image_path": "system/etc/permissions/uimremoteclient.xml"
+    },
+    {
+      "source": "system/etc/permissions/uimremoteserver.xml",
+      "reference_line": "system/etc/permissions/uimremoteserver.xml",
+      "status": "regular",
+      "image_path": "system/etc/permissions/uimremoteserver.xml"
+    },
+    {
+      "source": "vendor/bin/hw/qcrilNrd",
+      "reference_line": "vendor/bin/hw/qcrilNrd",
+      "status": "regular",
+      "image_path": "bin/hw/qcrilNrd"
+    },
+    {
+      "source": "vendor/bin/init.qcrild.sh",
+      "reference_line": "vendor/bin/init.qcrild.sh",
+      "status": "regular",
+      "image_path": "bin/init.qcrild.sh"
+    },
+    {
+      "source": "vendor/bin/ks",
+      "reference_line": "vendor/bin/ks",
+      "status": "regular",
+      "image_path": "bin/ks"
+    },
+    {
+      "source": "vendor/bin/qtigetprop",
+      "reference_line": "vendor/bin/qtigetprop",
+      "status": "regular",
+      "image_path": "bin/qtigetprop"
+    },
+    {
+      "source": "vendor/bin/qtisetprop",
+      "reference_line": "vendor/bin/qtisetprop",
+      "status": "regular",
+      "image_path": "bin/qtisetprop"
+    },
+    {
+      "source": "vendor/bin/ssgtzd",
+      "reference_line": "vendor/bin/ssgtzd",
+      "status": "regular",
+      "image_path": "bin/ssgtzd"
+    },
+    {
+      "source": "vendor/bin/vendor.qti.syshealthmon-service",
+      "reference_line": "vendor/bin/vendor.qti.syshealthmon-service",
+      "status": "regular",
+      "image_path": "bin/vendor.qti.syshealthmon-service"
+    },
+    {
+      "source": "vendor/bin/init.qcom.sensors.sh",
+      "reference_line": "vendor/bin/init.qcom.sensors.sh",
+      "status": "regular",
+      "image_path": "bin/init.qcom.sensors.sh"
+    },
+    {
+      "source": "vendor/bin/sensors-qesdk",
+      "reference_line": "vendor/bin/sensors-qesdk",
+      "status": "regular",
+      "image_path": "bin/sensors-qesdk"
+    },
+    {
+      "source": "vendor/bin/sscrpcd",
+      "reference_line": "vendor/bin/sscrpcd",
+      "status": "regular",
+      "image_path": "bin/sscrpcd"
+    },
+    {
+      "source": "vendor/bin/hw/vendor.qti.hardware.soter-service",
+      "reference_line": "vendor/bin/hw/vendor.qti.hardware.soter-service",
+      "status": "regular",
+      "image_path": "bin/hw/vendor.qti.hardware.soter-service"
+    },
+    {
+      "source": "vendor/bin/tftp_server",
+      "reference_line": "vendor/bin/tftp_server",
+      "status": "regular",
+      "image_path": "bin/tftp_server"
+    },
+    {
+      "source": "vendor/bin/thermal-engine-v2",
+      "reference_line": "vendor/bin/thermal-engine-v2",
+      "status": "regular",
+      "image_path": "bin/thermal-engine-v2"
+    },
+    {
+      "source": "vendor/bin/time_daemon",
+      "reference_line": "vendor/bin/time_daemon",
+      "status": "regular",
+      "image_path": "bin/time_daemon"
+    },
+    {
+      "source": "vendor/bin/hw/vendor.qti.hardware.qteeconnector@1.0-service",
+      "reference_line": "vendor/bin/hw/vendor.qti.hardware.qteeconnector@1.0-service",
+      "status": "regular",
+      "image_path": "bin/hw/vendor.qti.hardware.qteeconnector@1.0-service"
+    },
+    {
+      "source": "vendor/bin/cnss-daemon",
+      "reference_line": "vendor/bin/cnss-daemon",
+      "status": "regular",
+      "image_path": "bin/cnss-daemon"
+    },
+    {
+      "source": "vendor/bin/wifidisplayhalservice",
+      "reference_line": "vendor/bin/wifidisplayhalservice",
+      "status": "regular",
+      "image_path": "bin/wifidisplayhalservice"
+    }
+  ]
+}
