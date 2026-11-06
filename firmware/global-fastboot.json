@@ -1,0 +1,17 @@
+{
+  "codename": "mist",
+  "device": "Redmi Note 17 5G",
+  "region": "Global",
+  "version": "OS3.0.304.0.WPUMIXM",
+  "android": "16",
+  "type": "Fastboot",
+  "released": "2026-09-17",
+  "filename": "mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+  "url": "https://bigota.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+  "md5": "c4450c4e168052ca9de1211306d3beff",
+  "sources": [
+    "https://xmfirmwareupdater.com/hyperos/mist/stable/OS3.0.304.0.WPUMIXM/",
+    "https://mirom.ezbox.idv.tw/en/phone/mist/"
+  ],
+  "warning": "Research reference only. User's previously reported WPUMIDC.C11 variant is not equivalent to published WPUMIXM Global fastboot firmware."
+}

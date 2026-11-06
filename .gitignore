@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.tgz
+*.img
+*.bin
+*.zip
+!README.md

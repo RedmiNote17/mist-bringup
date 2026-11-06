@@ -1,0 +1,58 @@
+name: Inspect stock mist fastboot firmware
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/inspect-stock.yml'
+      - 'scripts/firmware.py'
+      - 'tests/test_firmware.py'
+      - 'firmware/global-fastboot.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mist-inspection-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Verify inspector tests
+        shell: bash
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Reclaim unused runner storage
+        shell: bash
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/hostedtoolcache/CodeQL || true
+          df -h /
+
+      - name: Verify manifest and inspect official Xiaomi fastboot archive
+        shell: bash
+        run: |
+          python3 -u scripts/firmware.py \
+            --manifest firmware/global-fastboot.json \
+            --working-directory "$RUNNER_TEMP/mist-firmware" \
+            --report-directory "$RUNNER_TEMP/mist-report"
+
+      - name: Upload inspection reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mist-stock-inspection-${{ github.run_number }}
+          path: ${{ runner.temp }}/mist-report/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Show final disk space
+        if: always()
+        shell: bash
+        run: df -h /
