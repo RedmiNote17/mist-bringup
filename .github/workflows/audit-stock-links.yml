@@ -1,0 +1,62 @@
+name: Audit mist stock symlinks using cache (no firmware download)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-stock-links.yml'
+      - 'scripts/audit_stock_links.py'
+      - 'tests/test_symlink_audit.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Offline validation
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Restore existing cached stock partition images (fail if absent)
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ${{ runner.temp }}/mist-work/selected
+            ${{ runner.temp }}/mist-work/partitions
+            ${{ runner.temp }}/mist-work/preparation.json
+          key: mist-${{ hashFiles('firmware/global-fastboot.json') }}-extracted-v1
+          fail-on-cache-miss: true
+
+      - name: Reconcile unresolved stock paths and symbolic links
+        run: |
+          python3 -u scripts/audit_stock_links.py \
+            --cache "$RUNNER_TEMP/mist-work" \
+            --reference docs/stock-blob-unresolved.txt \
+            --out "$RUNNER_TEMP/mist-link-audit"
+
+      - name: Publish text-only symlink audit into repository
+        run: |
+          mkdir -p generated/stock-global/link-audit
+          cp "$RUNNER_TEMP/mist-link-audit/"* generated/stock-global/link-audit/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add generated/stock-global/link-audit/
+          if ! git diff --cached --quiet; then
+            git commit -m "Record verified stock symlink reconciliation"
+            git push origin HEAD:main
+          fi
+
+      - name: Upload compact metadata report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mist-stock-link-audit-${{ github.run_number }}
+          path: ${{ runner.temp }}/mist-link-audit/
+          if-no-files-found: warn
+          retention-days: 30
