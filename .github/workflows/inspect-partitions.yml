@@ -1,0 +1,63 @@
+name: Inspect mist super partitions and boot images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/inspect-partitions.yml'
+      - 'scripts/inspect_partitions.py'
+      - 'tests/test_partitions.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mist-partitions-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 160
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate inspector tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Free unused storage
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/hostedtoolcache/CodeQL || true
+          df -h /
+      - name: Install aria2 downloader
+        run: |
+          if ! command -v aria2c >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq aria2
+          fi
+      - name: Build pinned read-only sparse super extractor
+        run: |
+          git clone -q https://github.com/soe1hom-arch/lucky-arch.git "$RUNNER_TEMP/lucky-arch"
+          cd "$RUNNER_TEMP/lucky-arch"
+          git checkout -q 09ba1a6b4b2c8d603fcb1d8bfe7cf167c9e0463b
+          go build -o "$RUNNER_TEMP/lucky-arch-bin" .
+          "$RUNNER_TEMP/lucky-arch-bin" -version
+      - name: Download verified firmware and extract super partition inventory
+        shell: bash
+        run: |
+          python3 -u scripts/inspect_partitions.py \
+            --manifest firmware/global-fastboot.json \
+            --work "$RUNNER_TEMP/mist-stage2" \
+            --report "$RUNNER_TEMP/mist-stage2-report" \
+            --lucky "$RUNNER_TEMP/lucky-arch-bin"
+      - name: Upload safe diagnostics only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mist-partition-report-${{ github.run_number }}
+          path: ${{ runner.temp }}/mist-stage2-report/
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Check storage
+        if: always()
+        run: df -h /
