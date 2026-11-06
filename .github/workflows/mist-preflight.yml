@@ -8,11 +8,12 @@ on:
       - 'device/xiaomi/mist/**'
       - 'manifests/mist-sm4450.xml'
       - 'scripts/preflight.py'
+      - 'scripts/audit_remaining.py'
       - 'tests/**'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: mist-one-pass-preflight-${{ github.ref }}
@@ -45,6 +46,11 @@ jobs:
           python3 -u scripts/preflight.py \
             --common "$RUNNER_TEMP/sm4450-common" \
             --report "$RUNNER_TEMP/mist-preflight"
+      - name: Compare stock fstab, AVB, VINTF variants and all module load lists
+        run: |
+          python3 -u scripts/audit_remaining.py \
+            --common "$RUNNER_TEMP/sm4450-common" \
+            --report "$RUNNER_TEMP/mist-preflight"
       - name: Confirm no tracked firmware binary images
         run: |
           if git ls-files | grep -E '\.(img|tgz|bin)$'; then
@@ -52,6 +58,21 @@ jobs:
             exit 1
           fi
           echo "No full firmware or proprietary binary artifact is tracked"
+      - name: Publish stable text-only hardware audit results
+        shell: bash
+        run: |
+          mkdir -p generated/preflight
+          cp "$RUNNER_TEMP/mist-preflight/SUMMARY.md" generated/preflight/SUMMARY.md
+          cp "$RUNNER_TEMP/mist-preflight/preflight.json" generated/preflight/preflight.json
+          cp "$RUNNER_TEMP/mist-preflight/HARDWARE-AUDIT.md" generated/preflight/HARDWARE-AUDIT.md
+          cp "$RUNNER_TEMP/mist-preflight/remaining-hardware-audit.json" generated/preflight/remaining-hardware-audit.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add generated/preflight/
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish one-pass mist hardware audit"
+            git push origin HEAD:main
+          fi
       - name: Upload compact, explicit pass/blocker report
         if: always()
         uses: actions/upload-artifact@v4
