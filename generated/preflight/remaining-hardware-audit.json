@@ -1,0 +1,258 @@
+{
+  "status": "stock_evidence_verified_not_flashable",
+  "firmware_downloaded": false,
+  "stock_firmware": "OS3.0.304.0.WPUMIXM",
+  "module_comparison": {
+    "vendor_boot": {
+      "stock_entries": 110,
+      "common_entries": 86,
+      "matching_names": 85,
+      "stock_only": [
+        "binder_prio.ko",
+        "bootinfo.ko",
+        "cpq.ko",
+        "dynamic_readahead.ko",
+        "hardware_info.ko",
+        "io_monitor.ko",
+        "iorap2.ko",
+        "kshrink_slabd.ko",
+        "metis.ko",
+        "mi_memory.ko",
+        "mi_memqr.ko",
+        "mi_rmap_efficiency.ko",
+        "mi_schedule.ko",
+        "mi_wq_dynamic_priority.ko",
+        "miev.ko",
+        "migt.ko",
+        "mist_factory_temp.ko",
+        "perf_helper.ko",
+        "qpnp-power-on.ko",
+        "radio_cable_det.ko",
+        "sc.ko",
+        "swinfo.ko",
+        "ufs_qcom.ko"
+      ],
+      "common_only": [
+        "ufs-qcom.ko"
+      ],
+      "stock_duplicates": [
+        "bootinfo.ko",
+        "swinfo.ko"
+      ]
+    },
+    "vendor_dlkm": {
+      "stock_entries": 350,
+      "common_entries": 232,
+      "matching_names": 231,
+      "stock_only": [
+        "binder_gki.ko",
+        "block2mtd.ko",
+        "byp_charger.ko",
+        "chipreg.ko",
+        "cnss2.ko",
+        "cnss_plat_ipc_qmi_svc.ko",
+        "focaltech_fts.ko",
+        "fs181x_dlkm.ko",
+        "ft3683g_spi.ko",
+        "goodix_ts.ko",
+        "gt9916k_spi.ko",
+        "hardwareinfo.ko",
+        "lct_tp.ko",
+        "mem-offline.ko",
+        "mi_mempool.ko",
+        "millet_binder.ko",
+        "millet_core.ko",
+        "millet_hs.ko",
+        "millet_oem_cgroup.ko",
+        "millet_pkg.ko",
+        "millet_sig.ko",
+        "mispidev.ko",
+        "mmrm_test_module.ko",
+        "mtd.ko",
+        "mtd_blkdevs.ko",
+        "mtdblock.ko",
+        "mtdoops.ko",
+        "nt36xxx-i2c.ko",
+        "nxp-nci.ko",
+        "oca72xxx_dlkm.ko",
+        "ofpart.ko",
+        "qts.ko",
+        "simtray.ko",
+        "tms_device_modules.ko",
+        "ufs_ffu.ko",
+        "xiaomi_spi_tee.ko",
+        "xiaomi_tp.ko"
+      ],
+      "common_only": [
+        "qpnp-power-on.ko"
+      ],
+      "stock_duplicates": [
+        "adsp_loader_dlkm.ko",
+        "audio_pkt_dlkm.ko",
+        "audio_prm_dlkm.ko",
+        "audpkt_ion_dlkm.ko",
+        "bt_fm_slim.ko",
+        "btpower.ko",
+        "camera.ko",
+        "focaltech_fts.ko",
+        "frpc-adsprpc.ko",
+        "fs181x_dlkm.ko",
+        "ft3683g_spi.ko",
+        "goodix_ts.ko",
+        "gpr_dlkm.ko",
+        "gsim.ko",
+        "gt9916k_spi.ko",
+        "hardwareinfo.ko",
+        "hdcp_qseecom_dlkm.ko",
+        "hdmi_dlkm.ko",
+        "ipam.ko",
+        "ipanetm.ko",
+        "lct_tp.ko",
+        "lpass_cdc_dlkm.ko",
+        "lpass_cdc_rx_macro_dlkm.ko",
+        "lpass_cdc_tx_macro_dlkm.ko",
+        "lpass_cdc_va_macro_dlkm.ko",
+        "lpass_cdc_wsa2_macro_dlkm.ko",
+        "lpass_cdc_wsa_macro_dlkm.ko",
+        "machine_dlkm.ko",
+        "mbhc_dlkm.ko",
+        "mmrm_test_module.ko",
+        "msm-mmrm.ko",
+        "msm_drm.ko",
+        "msm_ext_display.ko",
+        "msm_video.ko",
+        "nt36xxx-i2c.ko",
+        "nxp-nci.ko",
+        "oca72xxx_dlkm.ko",
+        "pinctrl_lpi_dlkm.ko",
+        "q6_dlkm.ko",
+        "q6_notifier_dlkm.ko",
+        "q6_pdr_dlkm.ko",
+        "qce50_dlkm.ko",
+        "qcedev-mod_dlkm.ko",
+        "qcrypto-msm_dlkm.ko",
+        "qrng_dlkm.ko",
+        "qts.ko",
+        "radio-i2c-rtc6226-qca.ko",
+        "rmnet_aps.ko",
+        "rmnet_core.ko",
+        "rmnet_ctl.ko",
+        "rmnet_mem.ko",
+        "rmnet_offload.ko",
+        "rmnet_perf.ko",
+        "rmnet_perf_tether.ko",
+        "rmnet_sch.ko",
+        "rmnet_shs.ko",
+        "rmnet_wlan.ko",
+        "smcinvoke_dlkm.ko",
+        "smmu_proxy_dlkm.ko",
+        "snd_event_dlkm.ko",
+        "spf_core_dlkm.ko",
+        "stub_dlkm.ko",
+        "swr_ctrl_dlkm.ko",
+        "swr_dlkm.ko",
+        "swr_dmic_dlkm.ko",
+        "swr_haptics_dlkm.ko",
+        "sync_fence.ko",
+        "tz_log_dlkm.ko",
+        "wcd937x_dlkm.ko",
+        "wcd937x_slave_dlkm.ko",
+        "wcd938x_dlkm.ko",
+        "wcd938x_slave_dlkm.ko",
+        "wcd9xxx_dlkm.ko",
+        "wcd_core_dlkm.ko",
+        "wsa881x_dlkm.ko",
+        "wsa883x_dlkm.ko",
+        "xiaomi_tp.ko"
+      ]
+    },
+    "system_dlkm": {
+      "stock_entries": 78,
+      "common_entries": 77,
+      "matching_names": 77,
+      "stock_only": [
+        "tls.ko"
+      ],
+      "common_only": [],
+      "stock_duplicates": []
+    }
+  },
+  "first_stage_fstab": {
+    "entries": 54,
+    "logical_partitions": {
+      "mi_ext": [
+        "erofs",
+        "ext4"
+      ],
+      "odm": [
+        "erofs",
+        "ext4"
+      ],
+      "product": [
+        "erofs",
+        "ext4"
+      ],
+      "system": [
+        "erofs",
+        "ext4"
+      ],
+      "system_dlkm": [
+        "erofs",
+        "ext4"
+      ],
+      "system_ext": [
+        "erofs",
+        "ext4"
+      ],
+      "vendor": [
+        "erofs",
+        "ext4"
+      ],
+      "vendor_dlkm": [
+        "erofs",
+        "ext4"
+      ]
+    },
+    "boot_chain": [
+      "boot",
+      "dtbo",
+      "init_boot",
+      "recovery",
+      "vendor_boot"
+    ],
+    "data_filesystem": "f2fs",
+    "metadata_filesystem": "f2fs",
+    "data_fileencryption": true,
+    "common_entries": 31
+  },
+  "vintf": {
+    "all_variant_entries": 1180,
+    "odm_variants": [
+      "etc/vintf/manifest_hcesim_dsds.xml",
+      "etc/vintf/manifest_hcesim_ssss.xml",
+      "etc/vintf/manifest_hcesimese_dsds.xml",
+      "etc/vintf/manifest_hcesimese_ssss.xml",
+      "etc/vintf/manifest_nonfc_dsds.xml",
+      "etc/vintf/manifest_nonfc_ssss.xml"
+    ],
+    "vendor_variants": [
+      "etc/vintf/manifest_parrot.xml",
+      "etc/vintf/manifest_ravelin.xml"
+    ],
+    "selected_variant": null
+  },
+  "unresolved": [
+    "vendor_boot: stock/common kernel module names differ; validate compiled modules and load order on mist before any boot test",
+    "vendor_dlkm: stock/common kernel module names differ; validate compiled modules and load order on mist before any boot test",
+    "system_dlkm: stock/common kernel module names differ; validate compiled modules and load order on mist before any boot test",
+    "Shared audio and permissions use sku_ravelin: choose actual mist SKU",
+    "Stock mi_ext supplies system/product bind and overlay mounts; plan removal or preservation when writing LineageOS dynamic partitions",
+    "Stock mount table uses AVB chains and encrypted F2FS: validate recovery, vbmeta and first-stage mount behavior",
+    "Select actual active ODM/VINTF/NFC/SIM variant, not all 1180 HAL entries",
+    "Different module lists are not interchangeable without verifying kernel build, ABI, dependencies and module order",
+    "Full vendor ELF/Soong, sepolicy and hardware runtime still need build tests",
+    "The reported WPUMIDC.C11 phone remains unverified against Global WPUMIXM"
+  ],
+  "rom_built": false,
+  "boot_tested": false
+}

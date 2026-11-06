@@ -1,0 +1,27 @@
+{
+  "status": "structural_preflight_passed_rom_not_boot_validated",
+  "stock_firmware": "OS3.0.304.0.WPUMIXM",
+  "verified_firmware_md5": "c4450c4e168052ca9de1211306d3beff",
+  "common_commit": "a476fff00d6149fc988f12f43b73cde1587c7b88",
+  "passed": [
+    "Common BoardConfig and product makefile inheritance: consistent",
+    "Stock boot, recovery, DTBO and super partition sizes: consistent",
+    "Pinned SM4450 common tree supports parrot/Linux 6.6 and shared vendor modules",
+    "All 995 common-tree proprietary source paths exist in verified Global stock",
+    "Stock logical partitions: 8; kernel modules: 460",
+    "Published VINTF entries: 1180 (includes inactive stock variants)"
+  ],
+  "boot_blockers": [
+    "Common VINTF uses ravelin-specific manifest; mist VINTF validation needed",
+    "Common audio/permissions use sku_ravelin; substitute verified mist SKU",
+    "Stock mi_ext is not in LineageOS dynamic group; decide preservation/removal on device",
+    "Generate and validate mist-specific VINTF, init/first-stage fstab and SEPolicy",
+    "Extract common vendor blobs to vendor/xiaomi/sm4450-common; no binaries are in this repo",
+    "Validate exact kernel/modules, recovery, AVB, OTA, display, camera and modem runtime",
+    "Compare test phone WPUMIDC.C11 against WPUMIXM stock reference before flashing",
+    "Full LineageOS 24.0 source sync, compile and real-device boot test not performed"
+  ],
+  "full_rom_built": false,
+  "flashable": false,
+  "firmware_downloaded": false
+}
