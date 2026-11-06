@@ -1,0 +1,109 @@
+name: One-pass mist bring-up (download once, reuse verified partitions)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/full-bringup.yml'
+      - 'scripts/pick_mirror.py'
+      - 'scripts/prepare_firmware.py'
+      - 'scripts/analyze_stock.py'
+      - 'tests/test_mirrors.py'
+      - 'tests/test_bringup.py'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mist-consolidated-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Run all unit tests before large downloads
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Prepare runner storage and tools
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/hostedtoolcache/CodeQL || true
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq aria2 erofs-utils erofsfuse lz4 zstd
+          df -h /
+
+      - name: Restore validated stock partition cache
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ${{ runner.temp }}/mist-work/selected
+            ${{ runner.temp }}/mist-work/partitions
+            ${{ runner.temp }}/mist-work/preparation.json
+          key: mist-${{ hashFiles('firmware/global-fastboot.json') }}-extracted-v1
+
+      - name: Probe mirrors and select fastest successful HTTP 206 range
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          python3 -u scripts/pick_mirror.py \
+            --manifest firmware/global-fastboot.json \
+            --output "$RUNNER_TEMP/fast-mirror-manifest.json" \
+            --report "$RUNNER_TEMP/mist-report"
+
+      - name: Build pinned sparse super extractor
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git clone -q https://github.com/soe1hom-arch/lucky-arch.git "$RUNNER_TEMP/lucky"
+          cd "$RUNNER_TEMP/lucky"
+          git checkout -q 09ba1a6b4b2c8d603fcb1d8bfe7cf167c9e0463b
+          go build -o "$RUNNER_TEMP/lucky-bin" .
+          "$RUNNER_TEMP/lucky-bin" -version
+
+      - name: Single checksum-verified firmware download and all partition extraction
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          python3 -u scripts/prepare_firmware.py \
+            --manifest "$RUNNER_TEMP/fast-mirror-manifest.json" \
+            --work "$RUNNER_TEMP/mist-work" \
+            --lucky "$RUNNER_TEMP/lucky-bin"
+
+      - name: Cache verified boot/EROFS partitions for future fixes
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        continue-on-error: true
+        with:
+          path: |
+            ${{ runner.temp }}/mist-work/selected
+            ${{ runner.temp }}/mist-work/partitions
+            ${{ runner.temp }}/mist-work/preparation.json
+          key: mist-${{ hashFiles('firmware/global-fastboot.json') }}-extracted-v1
+
+      - name: Get LineageOS boot image unpacker
+        run: |
+          git clone -q --depth=1 --branch lineage-23.0 \
+            https://github.com/LineageOS/android_system_tools_mkbootimg.git "$RUNNER_TEMP/mkbootimg"
+
+      - name: Inventory vendor HAL, VINTF, init, fstab, modules and boot
+        run: |
+          python3 -u scripts/analyze_stock.py \
+            --work "$RUNNER_TEMP/mist-work" \
+            --report "$RUNNER_TEMP/mist-report" \
+            --boottool "$RUNNER_TEMP/mkbootimg/unpack_bootimg.py"
+
+      - name: Upload compact research reports only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mist-complete-stock-inventory-${{ github.run_number }}
+          path: ${{ runner.temp }}/mist-report/
+          if-no-files-found: warn
+          retention-days: 60
+
+      - name: Final disk usage
+        if: always()
+        run: df -h /
