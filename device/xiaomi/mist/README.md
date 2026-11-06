@@ -1,7 +1,14 @@
-# device/xiaomi/mist (planned)
+# device/xiaomi/mist — preliminary LineageOS 24.0 tree
 
-Place the device-specific LineageOS product here only after stock property, partition-layout, and VINTF analysis.
+BoardConfig.mk inherits the pinned SM4450 common BoardConfig and overrides the verified mist super, boot,
+vendor_boot, init_boot, recovery, and DTBO sizes. Super size is set BEFORE common inclusion to prevent
+improper immediate evaluation of the dynamic group size.
 
-Pending: `AndroidProducts.mk`, `BoardConfig.mk`, `lineage_mist.mk`, `device.mk`, init, fstab, overlay, sepolicy and proprietary-files extraction tools.
+device.mk inherits the SM4450 common product, which in turn expects vendor/xiaomi/sm4450-common.
+The 995-path proprietary-files.txt is evidence checked against Global stock; it is NOT an extracted vendor tree.
+Do not run a separate mist extraction that duplicates common vendor modules.
 
-**No guessed BoardConfig is provided**: boot sizes, header settings and AVB properties need real firmware evidence.
+**Not ready for full ROM building or flashing:** upstream common still uses ravelin SKU audio and VINTF;
+mist-specific first-stage mount/AVB/SEPolicy, actual vendor extraction, kernel and runtime hardware tests remain.
+
+Run the single GH Actions mist-preflight workflow, then inspect its explicit list of remaining blockers.

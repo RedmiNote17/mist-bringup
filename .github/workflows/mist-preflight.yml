@@ -1,0 +1,62 @@
+name: mist one-pass LineageOS 24.0 preflight (no firmware download)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mist-preflight.yml'
+      - 'device/xiaomi/mist/**'
+      - 'manifests/mist-sm4450.xml'
+      - 'scripts/preflight.py'
+      - 'tests/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mist-one-pass-preflight-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout bring-up project
+        uses: actions/checkout@v4
+      - name: Validate entire repository offline
+        run: |
+          python3 -m compileall -q scripts device/xiaomi/mist
+          python3 -m unittest discover -s tests -v
+          bash -n scripts/copy_device_tree.sh
+      - name: Fetch pinned Qualcomm SM4450 common tree (no firmware)
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/sm4450-common"
+          cd "$RUNNER_TEMP/sm4450-common"
+          git init -q
+          git remote add origin https://github.com/xiaomi-ravelin/android_device_xiaomi_sm4450-common.git
+          git fetch -q --depth=1 origin a476fff00d6149fc988f12f43b73cde1587c7b88
+          git checkout -q --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = a476fff00d6149fc988f12f43b73cde1587c7b88
+      - name: Validate common config, boot partition evidence, proprietary paths, VINTF inventory
+        run: |
+          python3 -u scripts/preflight.py \
+            --common "$RUNNER_TEMP/sm4450-common" \
+            --report "$RUNNER_TEMP/mist-preflight"
+      - name: Confirm no tracked firmware binary images
+        run: |
+          if git ls-files | grep -E '\.(img|tgz|bin)$'; then
+            echo "Unexpected firmware image tracked" >&2
+            exit 1
+          fi
+          echo "No full firmware or proprietary binary artifact is tracked"
+      - name: Upload compact, explicit pass/blocker report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mist-one-pass-preflight-${{ github.run_number }}
+          path: ${{ runner.temp }}/mist-preflight/
+          retention-days: 60
+          if-no-files-found: warn

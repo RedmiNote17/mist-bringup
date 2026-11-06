@@ -1,37 +1,37 @@
-# Redmi Note 17 5G (mist) — LineageOS bring-up
+# Redmi Note 17 5G (mist) — unofficial LineageOS 24.0 bring-up
 
-> **Status:** stock-firmware research and inventory. **Not a bootable ROM. Not for flashing.**
+**Status: research-backed device-tree scaffold, NOT a flashable or boot-tested ROM.**
 
-This repository belongs to the [RedmiNote17](https://github.com/RedmiNote17) organization and is the staging area for an unofficial LineageOS 24.0 / Android 17 bring-up for **mist**.
+Repository: RedmiNote17/mist-bringup. Target: Android 17 / LineageOS 24.0.
 
-## Firmware reference
+## Most recent verified stock baseline
 
-- **Region:** Global (WPUMIXM)
-- **Fastboot release:** OS3.0.304.0.WPUMIXM (Android 16, 2026-09-17)
-- **Official Xiaomi CDN:** configured in `firmware/global-fastboot.json`; MD5 checked before inventory.
-- **Important:** the device was previously reported as `WPUMIDC.C11`. **This is not the same as WPUMIXM.** The Global firmware is used only to research stock layouts; do not flash or substitute regional firmware files.
+- Xiaomi Global OS3.0.304.0.WPUMIXM (Android 16), MD5 c4450c4e168052ca9de1211306d3beff.
+- Eight EROFS logical partitions in 10,200,547,328-byte super.
+- Boot header v4; kernel source baseline Linux 6.6; 460 recorded .ko modules.
+- 995 source paths cross-checked with the SM4450 common proprietary list.
+- Stock inventory and reconciled paths are versioned in generated/stock-global.
 
-## What gets built here
+## One-run integration workflow
 
-The GitHub Actions inspection workflow downloads the published fastboot archive from Xiaomi, validates its MD5, safely inventories members and image headers, and uploads **small diagnostic reports only**. It does not upload the proprietary firmware, flash anything, change a bootloader, or claim the device is supported by LineageOS.
+GitHub Actions: mist one-pass LineageOS 24.0 preflight (no firmware download).
 
-See `docs/bringup-checklist.md` for the staged roadmap and unresolved requirements.
+This single run validates all Python and tree tests, pulls only the pinned SM4450 common-tree source, verifies
+device/product/BoardConfig inheritance, stock partition size/order, module counts, VINTF metadata,
+and all 995 proprietary source paths. It uploads a small report describing remaining boot blockers.
 
-### Xiaomi upstream sources
+The shared SM4450 kernel/modules/devicetree dependencies are pinned in manifests/mist-sm4450.xml.
+BoardConfig and device.mk inherit the common SM4450 configuration but are not release-ready:
+the common project includes ravelin-specific audio and VINTF assumptions requiring mist adaptation.
 
-- Kernel: https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/mist-w-oss
-- Kernel build tooling: https://github.com/MiCode/kernel_build/tree/mist-w-oss
-- Device-tree kernel code: https://github.com/MiCode/kernel_devicetree/tree/mist-w-oss
+## Download/caching policy
 
-The inspected Xiaomi kernel Makefile declares Linux **6.6.118** and the mist config requests boot image header v4, init_boot and vendor_dlkm. These do **not** establish every required Android BoardConfig setting.
+Do not upload the full ~8.1 GB firmware. Measured official CDNORG speeds: ~13 MB/s on GitHub runners.
+One-pass source analysis succeeded and its extracted partition cache was restored and reused.
+Stock research can be inspected without another firmware download; older download workflows are manually invoked.
 
-### Sources for the pinned Global fastboot reference
+## Device safety
 
-- https://xmfirmwareupdater.com/hyperos/mist/stable/OS3.0.304.0.WPUMIXM/
-- https://mirom.ezbox.idv.tw/en/phone/mist/
-
-**No flashable artifacts are produced by this repository.**
-
-## Download performance
-
-The inspection workflow uses **aria2c** with up to **12 HTTP range connections**, retry/resume support, and progress summaries every 20 seconds. Range support and actual throughput depend on Xiaomi's CDN; faster downloads are not guaranteed. The final MD5 remains mandatory, and the full firmware is never published as a workflow artifact.
+Stock image WPUMIXM is NOT necessarily compatible with the owner's previously reported WPUMIDC.C11 variant.
+AVB, VINTF, recovery, kernel and real-device tests are blockers before any flashable release.
+See docs/current-bringup-status.md and docs/sm4450-common-analysis.md.

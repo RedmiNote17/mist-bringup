@@ -1,14 +1,6 @@
-name: Validate mist tree and stock blob list (offline)
+name: Validate mist tree and stock blob list (legacy/manual)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'device/xiaomi/mist/**'
-      - 'manifests/**'
-      - 'tests/**'
-      - '.github/workflows/validate-tree.yml'
-      - 'generated/stock-global/file-inventory.csv'
   workflow_dispatch:
 
 permissions:
@@ -24,10 +16,3 @@ jobs:
         run: python3 -m compileall -q scripts device/xiaomi/mist
       - name: Check device tree and stock-derived proprietary entries
         run: python3 -m unittest discover -s tests -v
-      - name: Confirm no firmware binaries tracked
-        run: |
-          if git ls-files | grep -E '\.(img|tgz|bin)$'; then
-            echo 'Unexpected firmware-like binary tracked' >&2
-            exit 1
-          fi
-          echo 'No firmware image binaries in repository'

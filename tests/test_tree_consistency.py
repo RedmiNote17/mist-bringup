@@ -40,12 +40,15 @@ class MistTreeTests(unittest.TestCase):
         self.assertGreaterEqual(len(paths), 4)
         self.assertEqual(len(paths), len(set(paths)))
         self.assertNotIn("device/xiaomi/mist", paths)
-        self.assertTrue(all(p.attrib.get("revision") == "lineage-24.0" for p in projects))
+        self.assertTrue(all(len(p.attrib.get("revision", "")) == 40 for p in projects))
 
     def test_stock_partition_config(self):
         board = (ROOT / "device/xiaomi/mist/BoardConfig.mk").read_text()
         for expected in (
             "TARGET_BOARD_PLATFORM := parrot",
+            "BOARD_BOOT_HEADER_VERSION := 4",
+            "include device/xiaomi/sm4450-common/BoardConfigCommon.mk",
+            "BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 10196353024",
             "BOARD_SUPER_PARTITION_SIZE := 10200547328",
             "BOARD_DTBOIMG_PARTITION_SIZE := 25165824",
             "BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296",

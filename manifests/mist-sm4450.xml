@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <!-- Reference common trees, not proof of mist compatibility. -->
+  <!-- Pinned LineageOS 24.0 SM4450 reference projects for reproducible bring-up. -->
   <remote name="xiaomi-ravelin" fetch="https://github.com/xiaomi-ravelin" />
-  <project name="android_device_xiaomi_sm4450-common" path="device/xiaomi/sm4450-common" remote="xiaomi-ravelin" revision="lineage-24.0" />
-  <project name="android_kernel_xiaomi_sm4450" path="kernel/xiaomi/sm4450" remote="xiaomi-ravelin" revision="lineage-24.0" />
-  <project name="android_kernel_xiaomi_sm4450-modules" path="kernel/xiaomi/sm4450-modules" remote="xiaomi-ravelin" revision="lineage-24.0" />
-  <project name="android_kernel_xiaomi_sm4450-devicetrees" path="kernel/xiaomi/sm4450-devicetrees" remote="xiaomi-ravelin" revision="lineage-24.0" />
+  <project name="android_device_xiaomi_sm4450-common" path="device/xiaomi/sm4450-common" remote="xiaomi-ravelin" revision="a476fff00d6149fc988f12f43b73cde1587c7b88" />
+  <project name="android_kernel_xiaomi_sm4450" path="kernel/xiaomi/sm4450" remote="xiaomi-ravelin" revision="f879c1be9822631de45f9ef4a5db5a98729dd180" />
+  <project name="android_kernel_xiaomi_sm4450-modules" path="kernel/xiaomi/sm4450-modules" remote="xiaomi-ravelin" revision="23a3d2ac880e7f1f8185fd86abb7a8ff94d24ec3" />
+  <project name="android_kernel_xiaomi_sm4450-devicetrees" path="kernel/xiaomi/sm4450-devicetrees" remote="xiaomi-ravelin" revision="da6aa48e7f1ab75dfaff618fa2339940d85d8e04" />
 </manifest>
