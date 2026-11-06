@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 RANGE_END = 8 * 1024 * 1024 - 1
 MAX_BYTES = 9 * 1024 * 1024
-ALLOWED = {"bigota.d.miui.com", "hugeota.d.miui.com"}
+ALLOWED = {"bigota.d.miui.com", "hugeota.d.miui.com", "cdnorg.d.miui.com", "bn.d.miui.com", "bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com"}
 
 def probe(candidate):
     u = candidate["url"]
