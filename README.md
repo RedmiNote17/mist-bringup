@@ -31,3 +31,7 @@ The inspected Xiaomi kernel Makefile declares Linux **6.6.118** and the mist con
 - https://mirom.ezbox.idv.tw/en/phone/mist/
 
 **No flashable artifacts are produced by this repository.**
+
+## Download performance
+
+The inspection workflow uses **aria2c** with up to **12 HTTP range connections**, retry/resume support, and progress summaries every 20 seconds. Range support and actual throughput depend on Xiaomi's CDN; faster downloads are not guaranteed. The final MD5 remains mandatory, and the full firmware is never published as a workflow artifact.

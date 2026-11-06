@@ -11,10 +11,11 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import shutil
 import struct
+import subprocess
 import tarfile
 from urllib.parse import urlparse, unquote
-from urllib.request import Request, urlopen
 
 ALLOWED_HOSTS = {"bigota.d.miui.com", "hugeota.d.miui.com"}
 SPARSE_MAGIC = 0xED26FF3A
@@ -42,31 +43,42 @@ def validate_manifest(m):
 
 
 def download(m, destination):
-    print(f"Downloading verified stock reference: {m['filename']}", flush=True)
-    request = Request(m["url"], headers={"User-Agent": "mist-stock-inventory/1.0"})
+    """Download using parallel HTTP ranges where supported; check hashes afterwards."""
+    if shutil.which("aria2c") is None:
+        raise RuntimeError("aria2c is required; install it before running inspection")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    print("Starting resumable parallel download (12 connections when supported)", flush=True)
+    print(f"Source: {m['url']}", flush=True)
+    args = [
+        "aria2c",
+        "--no-conf=true",
+        "--max-connection-per-server=12",
+        "--split=12",
+        "--min-split-size=8M",
+        "--continue=true",
+        "--file-allocation=none",
+        "--auto-file-renaming=false",
+        "--allow-overwrite=true",
+        "--max-tries=8",
+        "--retry-wait=8",
+        "--connect-timeout=30",
+        "--timeout=120",
+        "--summary-interval=20",
+        "--console-log-level=notice",
+        "--dir=" + str(destination.parent),
+        "--out=" + destination.name,
+        m["url"],
+    ]
+    subprocess.run(args, check=True)
+    total = destination.stat().st_size
+    if total <= 0 or total > MAX_ARCHIVE_BYTES:
+        raise ValueError(f"Unexpected archive size: {total} bytes")
     checksum = hashlib.md5()
     sha256 = hashlib.sha256()
-    total = 0
-    milestone = 0
-    with urlopen(request, timeout=120) as resp:
-        final = urlparse(resp.geturl())
-        if final.scheme != "https" or final.hostname not in ALLOWED_HOSTS:
-            raise ValueError(f"Unexpected download redirect: {resp.geturl()}")
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        with destination.open("wb") as out:
-            while True:
-                block = resp.read(8 * 1024 * 1024)
-                if not block:
-                    break
-                total += len(block)
-                if total > MAX_ARCHIVE_BYTES:
-                    raise ValueError("Archive exceeds configured maximum")
-                out.write(block)
-                checksum.update(block)
-                sha256.update(block)
-                if total - milestone >= 512 * 1024**2:
-                    print(f"Downloaded {total / 1024**3:.2f} GiB", flush=True)
-                    milestone = total
+    with destination.open("rb") as stream:
+        while block := stream.read(16 * 1024 * 1024):
+            checksum.update(block)
+            sha256.update(block)
     observed = checksum.hexdigest()
     if observed.lower() != m["md5"].lower():
         raise ValueError(f"MD5 mismatch: observed {observed}, expected {m['md5']}")

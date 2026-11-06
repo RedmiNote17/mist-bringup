@@ -35,6 +35,15 @@ jobs:
           sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/hostedtoolcache/CodeQL || true
           df -h /
 
+      - name: Install parallel downloader
+        shell: bash
+        run: |
+          if ! command -v aria2c >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq aria2
+          fi
+          aria2c --version | head -n 1
+
       - name: Verify manifest and inspect official Xiaomi fastboot archive
         shell: bash
         run: |

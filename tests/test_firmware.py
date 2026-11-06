@@ -1,5 +1,6 @@
 """Offline checks for the safe stock firmware inventory script."""
 import io
+import hashlib
 import json
 from pathlib import Path
 import struct
@@ -7,9 +8,10 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from firmware import classify_header, inspect_archive, safe_name, validate_manifest
+from firmware import classify_header, download, inspect_archive, safe_name, validate_manifest
 
 
 class FirmwareInspectorTests(unittest.TestCase):
@@ -65,6 +67,37 @@ class FirmwareInspectorTests(unittest.TestCase):
             self.assertTrue((root / "report/summary.md").exists() is False)
             self.assertTrue((root / "report/SUMMARY.md").exists())
             self.assertEqual(len(report["image_headers"]), 1)
+
+    def test_parallel_download_and_hash(self):
+        payload = b"test-fastboot-archive"
+        expected_md5 = hashlib.md5(payload).hexdigest()
+        def fake_run(args, check):
+            self.assertTrue(check)
+            self.assertEqual(args[0], "aria2c")
+            self.assertIn("--split=12", args)
+            self.assertIn("--max-connection-per-server=12", args)
+            self.assertIn("--continue=true", args)
+            name = next(a.split("=", 1)[1] for a in args if a.startswith("--out="))
+            directory = next(a.split("=", 1)[1] for a in args if a.startswith("--dir="))
+            (Path(directory) / name).write_bytes(payload)
+
+        with tempfile.TemporaryDirectory() as td:
+            destination = Path(td) / self.manifest["filename"]
+            with patch("firmware.shutil.which", return_value="/usr/bin/aria2c"), patch(
+                "firmware.subprocess.run", side_effect=fake_run
+            ):
+                integrity = download({**self.manifest, "md5": expected_md5}, destination)
+            self.assertEqual(integrity["md5"], expected_md5)
+
+    def test_reject_corrupt_download(self):
+        with tempfile.TemporaryDirectory() as td:
+            destination = Path(td) / self.manifest["filename"]
+            def fake_run(args, check):
+                destination.write_bytes(b"invalid checksum")
+            with patch("firmware.shutil.which", return_value="/usr/bin/aria2c"), patch(
+                "firmware.subprocess.run", side_effect=fake_run
+            ), self.assertRaisesRegex(ValueError, "MD5 mismatch"):
+                download(self.manifest, destination)
 
 
 if __name__ == "__main__":
