@@ -1,0 +1,31 @@
+name: Benchmark Xiaomi CDN without downloading firmware
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/probe-cdn.yml'
+      - 'scripts/probe_cdn.py'
+      - 'firmware/cdn-candidates.json'
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Probe official CDN candidates (bounded 8MiB each)
+        run: python3 -u scripts/probe_cdn.py firmware/cdn-candidates.json "$RUNNER_TEMP/cdn/report.json"
+      - name: Upload benchmark results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mist-cdn-probe-${{ github.run_number }}
+          path: ${{ runner.temp }}/cdn/
+          retention-days: 14
+          if-no-files-found: warn

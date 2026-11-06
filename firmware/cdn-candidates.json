@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Bigota Fastboot",
+    "url": "https://bigota.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+    "bytes_anticipated": "8.1 GB"
+  },
+  {
+    "label": "Hugeota Fastboot (candidate)",
+    "url": "https://hugeota.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global_images_OS3.0.304.0.WPUMIXM_20260917.0000.00_16.0_global_c4450c4e16.tgz",
+    "bytes_anticipated": "8.1 GB"
+  },
+  {
+    "label": "Bigota Recovery (candidate)",
+    "url": "https://bigota.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global-ota_full-OS3.0.304.0.WPUMIXM-user-16.0-372c599d17.zip",
+    "bytes_anticipated": "5.0 GB"
+  },
+  {
+    "label": "Hugeota Recovery (candidate)",
+    "url": "https://hugeota.d.miui.com/OS3.0.304.0.WPUMIXM/mist_global-ota_full-OS3.0.304.0.WPUMIXM-user-16.0-372c599d17.zip",
+    "bytes_anticipated": "5.0 GB"
+  }
+]
